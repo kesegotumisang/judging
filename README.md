@@ -171,6 +171,12 @@ Here's how I (so far) envision the data structure (assumes firebase):
 
 ```
 
+## Progress
+
+So far, I've built a way to list all your judges in a [CSV](http://nealrs.github.io/judging/data/judgesT.csv), load them into a JSON array and assign each one a unique alphanumeric id +  [upload them to firebase](http://nealrs.github.io/judging/uploadJudges.html), and view the [uploaded list](http://nealrs.github.io/judging/judges.html).
+
+I haven't started the mobile app or figured out how to design the main dashboard view. Again, I'd love your help here. Mockups coming soon?
+
 ## Considerations / ideas
 
 - Use firebase for 2way realtime data sync.

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>HackathonName judges</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,700,900,400italic' rel='stylesheet' type='text/css'>
+  <link rel='stylesheet' type='text/css' href='css/style.css'>
+  <link rel="shortcut icon" href="http://nealrs.github.io/devpost-follow-button/icon/devpost-128.png">
+  <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
+  <script type='text/javascript' src='js/papaparse.min.js'></script>
+  <script type='text/javascript' src='js/mustache.min.js'></script>
+  <script src="//cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div id="header">
+      <h1>HackathonName judges</h1>
+      <!--<a href="uploadJudges.html">Update judges</a>-->
+    </div>
+
+    <div id="fullTable"></div>
+  </div>
+
+  <script id="template" type="x-tmpl-mustache">
+    <!--<div class="search_container">
+      <input class="search" type="search" placeholder="Filter by sponsor prize, project name, category or whatever" id="filter"/>
+    </div>-->
+    <table id="expoTable">
+      <thead>
+        <tr>
+          <th class="number">judge id</th>
+          <th class="number">name</th>
+          <!--<th class="number">email</th>
+          <th class="number">phone</th>-->
+        </tr>
+      </thead>
+      <tbody class="list">
+        {{#judges}}
+          <tr>
+            <td class="number">{{id}}</td>
+            <td class="number">{{name}}</td>
+            <!--<td class="number">{{email}}</td>
+            <td class="number">{{phone}}</td>-->
+          </tr>
+        {{/judges}}
+      </tbody>
+    </table>
+  </script>
+  <br>
+  <div id="footer">
+    <a href="http://devpost.com"><img src="http://devpost0.assetspost.com/assets/shared/devpost_logo-646bdf6ac6663230947a952f8d354cad.svg" style="height: 30px;"></a>
+
+  </div>
+
+  <script type="text/javascript">
+    var fbData;
+    document.addEventListener('DOMContentLoaded', function() {
+
+      fb = new Firebase('https://judge.firebaseio.com/');
+      fb.on("value", function(snapshot) {
+        fbData = snapshot.val();
+        console.log(fbData);
+
+        // process and render template
+        var template = $('#template').html();
+        Mustache.parse(template);   // optional, speeds up future uses
+        var rendered = Mustache.render(template, fbData);
+        console.log(rendered);
+        $('#fullTable').html(rendered);
+
+      }, function (errorObject) {
+          console.log("The read failed: " + errorObject.code);
+        });
+    });
+  </script>
+</body>
+</html>

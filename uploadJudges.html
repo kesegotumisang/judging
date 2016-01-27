@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset='utf-8'>
+  <title>Upload judges</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'/>
+  <link href='//fonts.googleapis.com/css?family=Roboto:400,700,900,400italic' rel='stylesheet' type='text/css'>
+  <link rel='stylesheet' type='text/css' href='css/style.css'>
+  <link rel="shortcut icon" href="http://nealrs.github.io/devpost-follow-button/icon/devpost-128.png">
+  <script type='text/javascript' src='//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js'></script>
+  <script type='text/javascript' src='js/papaparse.min.js'></script>
+  <script type='text/javascript' src='js/mustache.min.js'></script>
+  <script src="//cdn.firebase.com/js/client/2.4.0/firebase.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div id="header">
+      <h1>Upload judges</h1>
+    </div>
+
+    <div id="uploadControls">
+      <p>
+        <a href="data/judgesT.csv" download>Download CSV template</a>
+
+        <input type="file" id="loadCSV"></input>
+
+        <button onclick="uploadJudges()" id="upload" style="font-family: sans-serif;font-size: 16px;display:none;">Upload / replace judges</button>
+      </p>
+
+    </div>
+
+    <div id="fullTable"></div>
+  </div>
+
+  <script id="template" type="x-tmpl-mustache">
+    <!--<div class="search_container">
+      <input class="search" type="search" placeholder="Filter by sponsor prize, project name, category or whatever" id="filter"/>
+    </div>-->
+    <table id="expoTable">
+      <thead>
+        <tr>
+          <th class="number">judge id</th>
+          <th class="number">name</th>
+          <th class="number">email</th>
+          <th class="number">phone</th>
+        </tr>
+      </thead>
+      <tbody class="list">
+        {{#data}}
+          <tr>
+            <td class="number">{{id}}</td>
+            <td class="number">{{name}}</td>
+            <td class="number">{{email}}</td>
+            <td class="number">{{phone}}</td>
+          </tr>
+        {{/data}}
+      </tbody>
+    </table>
+  </script>
+  <br>
+  <div id="footer">
+    <a href="http://devpost.com"><img src="http://devpost0.assetspost.com/assets/shared/devpost_logo-646bdf6ac6663230947a952f8d354cad.svg" style="height: 30px;"></a>
+
+  </div>
+
+  <script type="text/javascript">
+    var tableData;
+    function getParam(variable){
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        if(pair[0] == variable){return pair[1];}
+      }
+      return(false);
+    }
+
+    document.getElementById('loadCSV').addEventListener("change", displayJudges, false);
+
+    function displayJudges(){
+      Papa.parse(document.getElementById('loadCSV').files[0], {
+        download: true,
+        header: true,
+        complete: function(results) {
+          tableData = results;
+          console.log(tableData);
+
+          for (var i=0; i < tableData.data.length; i++){
+            tableData.data[i].id = makeid()+i;
+          }
+          console.log(tableData);
+
+          // process and render template
+          var template = $('#template').html();
+          Mustache.parse(template);   // optional, speeds up future uses
+          var rendered = Mustache.render(template, tableData);
+          //console.log(rendered);
+          $('#fullTable').html(rendered);
+          $('#upload').show();
+  	    }
+      });
+    }
+
+    function uploadJudges(){
+      console.log(tableData);
+      if (tableData == null || tableData == ""){
+        alert("please load a valid CSV");
+      } else {
+          var judges = new Firebase('https://judge.firebaseio.com/judges');
+          judges.set(tableData.data, function(err){
+            if (err){
+              alert("error saving data: " + err);
+            } else {
+                window.location("/judges.html");
+              }
+          });
+        }
+    }
+
+    // http://stackoverflow.com/questions/1349404/generate-a-string-of-5-random-characters-in-javascript
+    function makeid(){
+      var text = "";
+      var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+      for (var i=0; i < 4; i++){
+        text += possible.charAt(Math.floor(Math.random() * possible.length));}
+      return text;
+    }
+
+  </script>
+</body>
+</html>

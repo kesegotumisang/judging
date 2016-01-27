@@ -1,0 +1,119 @@
+{
+  "projects": [
+    {
+      "id": "p1",
+      "expo" : "1",
+      "table" : "1",
+      "name" : "Kontext",
+      "sponsorPrizes" :
+        [
+          "Best Houndify Hack",
+          "1st place - Sendgrid",
+          "Twilio - best SMS project",
+          "Best Use of Comcast Everyblock API"
+        ],
+      "custom1" : "Hardware",
+      "custom2" : ""
+    },
+
+    {
+      "id" : "p2",
+      "expo" : "1",
+      "table" : "2",
+      "name" : "Protray.me",
+      "sponsorPrizes" :
+        [
+          "Best Houndify Hack",
+          "Twilio - best SMS project"
+        ],
+      "custom1" : "Humor",
+      "custom2" : ""
+    },
+
+    {
+      "id" : "p3",
+      "expo" : "1",
+      "table" : "3",
+      "name" : "EveryChat",
+      "sponsorPrizes" :
+        [
+          "Best Use of Comcast Everyblock API"
+        ],
+      "custom1" : "Social Impact / Civic Hacking",
+      "custom2" : ""
+    }
+  ],
+
+  "judges": [
+    {
+      "id" : "a5x7a",
+      "name" : "Neal Shyam",
+      "phone" : "1115551212",
+      "email" : "neal@neal.rs"
+    },
+
+    {
+      "id" : "b4x41",
+      "name" : "Richard Murby",
+      "phone" : "1115551212",
+      "email" : "rich@murbysworld.com"
+    },
+
+    {
+      "id" : "y7g57",
+      "name" : "Holly Tiwari",
+      "phone" : "1115551212",
+      "email" : "holly@gmail.com"
+    }
+  ],
+
+  "scores": [
+    {
+      "id": "p1",
+      "round1" : {
+        "j1" : "a5x7a",
+        "j2" : "y7g57",
+        "s1" : "1",
+        "s2" : "2"
+      },
+      "round2": {
+        "j1" : "b4x41",
+        "j2" : "a5x7a",
+        "s1" : "1",
+        "s2" : "2"
+      }
+    },
+
+    {
+      "id": "p2",
+      "round1": {
+        "j1" : "a5x7a",
+        "j2" : "y7g57",
+        "s1" : "3",
+        "s2" : "3"
+      },
+      "round2": {
+        "j1" : "b4x41",
+        "j2" : "a5x7a",
+        "s1" : "1",
+        "s2" : "2"
+      }
+    },
+
+    {
+      "id": "p3",
+      "round1": {
+        "j1" : "a5x7a",
+        "j2" : "y7g57",
+        "s1" : "3",
+        "s2" : "3"
+      },
+      "round2": {
+        "j1" : "b4x41",
+        "j2" : "a5x7a",
+        "s1" : "0",
+        "s2" : "0"
+      }
+    }
+  ]
+}
